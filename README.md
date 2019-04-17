@@ -30,7 +30,7 @@ Let’s check out some terminology below:
 
 **namespace** = virtual cluster on top of an underlying physical cluster
 
-## Service Types
+### Service Types
 
 **clusterIP** = exposes services only inside the cluster (default)
 
@@ -40,9 +40,11 @@ Let’s check out some terminology below:
 
 **externalName** = this maps a service to endpoints completely outside of the cluster
 
-## Controllers
+### Controllers
 
-**replicaSet** = ensures a certain number of pods are running
+**replicationcontroller** = ensures a certain number of pods are running
+
+**replicaSet** = declared in essentially the same way as Replication Controllers, except that they have more options for the selector.
 
 **deployment** = declaratively manages a replicaSet
 
@@ -52,16 +54,15 @@ Let’s check out some terminology below:
 
 **job** = manages a set of pods that run to completion and tracks the overall progress
 
+Links:
+
+https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-deployments-understanding-replication-options/
+
 ## Components & Services
 
 ### Control Plane
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-
-*** Services on Master Nodes: entities responsible for managing cluster state.
+* **Services on Master Nodes** - entities responsible for managing cluster state.
 
 | Name                     | Summary |
 | ------------------------ | ------------- |
@@ -70,47 +71,38 @@ Let’s check out some terminology below:
 | kube-scheduler           | schedule pods to run on selected nodes |
 | kube-controller-manager  | node controller, replication controller, endpoints controller, and service account & token controllers |
 
-| Name                                                                                                          | Summary                                            |
-| ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------  |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-apiserver][kube-apiserver]]                   | exposes the Kubernetes API from master nodes       |
-| [[https://coreos.com/etcd/][etcd]]                                                                            | reliable data store for all k8s cluster data       |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-scheduler][kube-scheduler]]                   | schedule pods to run on selected nodes             |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-controller-manager][kube-controller-manager]] | node controller, replication controller, endpoints |
 
-*** Services on Worker Nodes: individual machines or VMs that make up the cluster
+* **Services on Worker Nodes** - individual machines or VMs that make up the cluster
 | Name              | Summary                                                                                   |
-|-------------------+-------------------------------------------------------------------------------------------|
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kubelet][kubelet]]           | makes sure that containers are running in a pod                                           |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-proxy][kube-proxy]]        | perform connection forwarding                                                             |
-| [[https://github.com/docker/engine][Container Runtime]] | Kubernetes supported runtimes: Docker, rkt, runc and any [[https://github.com/opencontainers/runtime-spec][OCI runtime-spec]] implementation. |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| kubelet           | makes sure that containers are running in a pod                                           |
+| kube-proxy        | perform connection forwarding                                                             |
+| Container Runtime | Kubernetes supported runtimes: Docker, rkt, runc and any OCI runtime-spec implementation. |
 
-*** Addons: pods and services that implement cluster features
+### Extra components
+
+* **Addons** - pods and services that implement cluster features
 | Name                          | Summary                                                                   |
-|-------------------------------+---------------------------------------------------------------------------|
+| ----------------------------- | ------------------------------------------------------------------------- |
 | DNS                           | serves DNS records for Kubernetes services                                |
 | Web UI                        | a general purpose, web-based UI for Kubernetes clusters                   |
 | Container Resource Monitoring | collect, store and serve container metrics                                |
 | Cluster-level Logging         | save container logs to a central log store with search/browsing interface |
 
-*** Tools
+* **Tools**
 | Name                  | Summary                                                     |
-|-----------------------+-------------------------------------------------------------|
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kubectl][kubectl]]               | the command line util to talk to k8s cluster                |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kubeadm][kubeadm]]               | the command to bootstrap the cluster                        |
-| [[https://kubernetes.io/docs/reference/setup-tools/kubefed/kubefed/][kubefed]]               | the command line to control a Kubernetes Cluster Federation |
-| Kubernetes Components | [[https://kubernetes.io/docs/concepts/overview/components/][Link: Kubernetes Components]]                                 |
+| --------------------- | ----------------------------------------------------------- |
+| kubectl               | the command line util to talk to k8s cluster                |
+| kubeadm               | the command to bootstrap the cluster                        |
+| kubefed               | the command line to control a Kubernetes Cluster Federation |
 
-** More Resources
-License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_license.txt][MIT License]].
+**More Resources**
 
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 https://codefresh.io/kubernetes-guides/kubernetes-cheat-sheet/
 
-
-
-
-
+https://kubernetes.io/docs/concepts/overview/components/
 
 
 ## Core Concepts
