@@ -61,21 +61,13 @@ Let’s check out some terminology below:
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
 
-| Name                         | Summary                    |
-|------------------------------+----------------------------|
-| List api group               | =kubectl api-versions=     |
-| List all CRD                 | =kubectl get crd=          |
-| List storageclass            | =kubectl get storageclass= |
-| List all supported resources | =kubectl api-resources=    |
-
-
 *** Services on Master Nodes: entities responsible for managing cluster state.
-| Name                                                                                                          | Summary             |                                                                                    |
-| ------------------------------------------------------------------------------------------------------------- | ------------------- |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-apiserver][kube-apiserver]]                   | exposes the Kubernetes API from master nodes                                                           |
-| [[https://coreos.com/etcd/][etcd]]                                                                            | reliable data store for all k8s cluster data                                                           |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-scheduler][kube-scheduler]]                   | schedule pods to run on selected nodes                                                                 |
-| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-controller-manager][kube-controller-manager]] | node controller, replication controller, endpoints controller, and service account & token controllers |
+| Name                                                                                                          | Summary                                            |
+| ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------  |
+| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-apiserver][kube-apiserver]]                   | exposes the Kubernetes API from master nodes       |
+| [[https://coreos.com/etcd/][etcd]]                                                                            | reliable data store for all k8s cluster data       |
+| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-scheduler][kube-scheduler]]                   | schedule pods to run on selected nodes             |
+| [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-controller-manager][kube-controller-manager]] | node controller, replication controller, endpoints |
 
 *** Services on Worker Nodes: individual machines or VMs that make up the cluster
 | Name              | Summary                                                                                   |
