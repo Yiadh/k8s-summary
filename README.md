@@ -18,11 +18,11 @@ This exam curriculum includes these general domains and their weights on the exa
 
 
 
-# 3. Core Concepts
+# 2. Core Concepts
 
-## 3.1 Kubernetes architecture
+## 2.1 Kubernetes architecture
 
-### 3.1.1 Control Plane
+### 2.1.1 Control Plane
 
 **Services on Master Nodes:** entities responsible for managing cluster state.
 
@@ -42,7 +42,7 @@ This exam curriculum includes these general domains and their weights on the exa
 | kube-proxy        | perform connection forwarding                                                             |
 | Container Runtime | Kubernetes supported runtimes: Docker, rkt, runc and any OCI runtime-spec implementation. |
 
-### 3.1.2 Extra components
+### 2.1.2 Extra components
 
 **Addons:** - pods and services that implement cluster features
 
@@ -71,9 +71,9 @@ https://kubernetes.io/docs/concepts/overview/components/
 
 
 
-## 3.2 Kubernetes basic objects
+## 2.2 Kubernetes basic objects
 
-### 3.2.1 Basic units
+### 2.2.1 Basic units
 
 **pod** = container / set of containers + storage resources + unique IP + local options
 
@@ -83,7 +83,7 @@ https://kubernetes.io/docs/concepts/overview/components/
 
 **namespace** = virtual cluster on top of an underlying physical cluster
 
-### 3.2.2 Service Types
+### 2.2.2 Service Types
 
 **clusterIP** = exposes services only inside the cluster (default)
 
@@ -94,7 +94,7 @@ https://kubernetes.io/docs/concepts/overview/components/
 **externalName** = this maps a service to endpoints completely outside of the cluster
 
 
-### 3,2,3 Controllers
+### 2,2,3 Controllers
 
 **replicationcontroller** = ensures a certain number of pods are running
 
@@ -112,7 +112,7 @@ https://kubernetes.io/docs/concepts/overview/components/
 
 https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-deployments-understanding-replication-options/
 
-### 3.3.4 RBAC Authorization objects
+### 2.3.4 RBAC Authorization objects
 
 In the RBAC API, a role contains rules that represent a set of permissions. Permissions are purely additive (there are no “deny” rules). A role can be defined within a namespace with a Role, or cluster-wide with a ClusterRole.
 
@@ -131,7 +131,7 @@ Example: Create a ClusterRole called pod-reader, and use it to grant permissions
 
 **ClusterRoleBinding** =  grants the permissions defined in a ClusterRole to a user or set of users
 
-### 3.3.5 Security and policy objects
+### 2.3.5 Security and policy objects
 
 **NetworkPolicy** = a specification of how groups of pods are allowed to communicate with each other and other network endpoints.
 
