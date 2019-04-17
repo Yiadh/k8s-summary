@@ -54,7 +54,9 @@ Let’s check out some terminology below:
 
 **job** = manages a set of pods that run to completion and tracks the overall progress
 
-Links:
+
+
+**Links:**
 
 https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-deployments-understanding-replication-options/
 
@@ -73,6 +75,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 
 
 * **Services on Worker Nodes** - individual machines or VMs that make up the cluster
+
 | Name              | Summary                                                                                   |
 | ----------------- | ----------------------------------------------------------------------------------------- |
 | kubelet           | makes sure that containers are running in a pod                                           |
@@ -82,6 +85,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 ### Extra components
 
 * **Addons** - pods and services that implement cluster features
+
 | Name                          | Summary                                                                   |
 | ----------------------------- | ------------------------------------------------------------------------- |
 | DNS                           | serves DNS records for Kubernetes services                                |
@@ -90,6 +94,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 | Cluster-level Logging         | save container logs to a central log store with search/browsing interface |
 
 * **Tools**
+
 | Name                  | Summary                                                     |
 | --------------------- | ----------------------------------------------------------- |
 | kubectl               | the command line util to talk to k8s cluster                |
