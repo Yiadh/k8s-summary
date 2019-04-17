@@ -23,28 +23,39 @@ Let’s check out some terminology below:
 ### Basic Objects
 
 **pod** = container / set of containers + storage resources + unique IP + local options
+
 **service** = abstraction layer on top of a set of ephemeral pods (think of this as the ‘face’ of a set of pods)
+
 **volume** = sometimes-shared, persistent storage
+
 **namespace** = virtual cluster on top of an underlying physical cluster
 
 ## Service Types
 
 **clusterIP** = exposes services only inside the cluster (default)
+
 **nodePort** = exposes services at the specified port on all nodes (<node-ip>:<nodePort>)
+
 **loadBalancer** = exposes the service with a cloud-provider’s load balancer.
+
 **externalName** = this maps a service to endpoints completely outside of the cluster
 
 ## Controllers
 
 **replicaSet** = ensures a certain number of pods are running
+
 **deployment** = declaratively manages a replicaSet
+
 **statefulSet** = like a deployment, but for non-interchangeable (or stateful) underlying pods
+
 **daemonSet** = manages pods that need to run on all/some nodes
+
 **job** = manages a set of pods that run to completion and tracks the overall progress
 
 ## Components & Services
 
 ### Control Plane
+
 *** Services on Master Nodes: entities responsible for managing cluster state.
 | Name                    | Summary                                                                                                |
 |-------------------------+--------------------------------------------------------------------------------------------------------|
@@ -52,6 +63,7 @@ Let’s check out some terminology below:
 | [[https://coreos.com/etcd/][etcd]]                    | reliable data store for all k8s cluster data                                                           |
 | [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-scheduler][kube-scheduler]]          | schedule pods to run on selected nodes                                                                 |
 | [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-controller-manager][kube-controller-manager]] | node controller, replication controller, endpoints controller, and service account & token controllers |
+
 *** Services on Worker Nodes: individual machines or VMs that make up the cluster
 | Name              | Summary                                                                                   |
 |-------------------+-------------------------------------------------------------------------------------------|
@@ -74,6 +86,7 @@ Let’s check out some terminology below:
 | [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kubeadm][kubeadm]]               | the command to bootstrap the cluster                        |
 | [[https://kubernetes.io/docs/reference/setup-tools/kubefed/kubefed/][kubefed]]               | the command line to control a Kubernetes Cluster Federation |
 | Kubernetes Components | [[https://kubernetes.io/docs/concepts/overview/components/][Link: Kubernetes Components]]                                 |
+
 ** More Resources
 License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_license.txt][MIT License]].
 
