@@ -64,7 +64,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 
 ### Control Plane
 
-* **Services on Master Nodes** - entities responsible for managing cluster state.
+**Services on Master Nodes:** entities responsible for managing cluster state.
 
 | Name                     | Summary |
 | ------------------------ | ------------- |
@@ -74,7 +74,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 | kube-controller-manager  | node controller, replication controller, endpoints controller, and service account & token controllers |
 
 
-* **Services on Worker Nodes** - individual machines or VMs that make up the cluster
+**Services on Worker Nodes:** individual machines or VMs that make up the cluster
 
 | Name              | Summary                                                                                   |
 | ----------------- | ----------------------------------------------------------------------------------------- |
@@ -84,7 +84,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 
 ### Extra components
 
-* **Addons** - pods and services that implement cluster features
+**Addons:** - pods and services that implement cluster features
 
 | Name                          | Summary                                                                   |
 | ----------------------------- | ------------------------------------------------------------------------- |
@@ -93,7 +93,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 | Container Resource Monitoring | collect, store and serve container metrics                                |
 | Cluster-level Logging         | save container logs to a central log store with search/browsing interface |
 
-* **Tools**
+**Tools:**
 
 | Name                  | Summary                                                     |
 | --------------------- | ----------------------------------------------------------- |
