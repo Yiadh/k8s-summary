@@ -2,7 +2,7 @@
 
 Yiadh TLIJANI, April 2019, (for K8s 1,3)
 
-## The CKAD Curriculum
+# 1. The CKAD Curriculum
 
 The online, proctored, performance-based test consists of a set of performance-based items (problems) to be solved in a command line and is expected to take approximately two (2) hours to complete.
 
@@ -16,11 +16,11 @@ This exam curriculum includes these general domains and their weights on the exa
 * **13% – Services & Networking:** This section involves understanding services and demonstrating a basic understanding of NetworkPolicies
 * **08% – State Persistence:** This requires knowledge of PersistentVolumeClaims for storage
 
-## Definitions
+# 2. Definitions
 
 Let’s check out some terminology below:
 
-### Basic Objects
+### 2.1 Basic Objects
 
 **pod** = container / set of containers + storage resources + unique IP + local options
 
@@ -30,7 +30,7 @@ Let’s check out some terminology below:
 
 **namespace** = virtual cluster on top of an underlying physical cluster
 
-### Service Types
+### 2.2 Service Types
 
 **clusterIP** = exposes services only inside the cluster (default)
 
@@ -40,7 +40,7 @@ Let’s check out some terminology below:
 
 **externalName** = this maps a service to endpoints completely outside of the cluster
 
-### Controllers
+### 2.3 Controllers
 
 **replicationcontroller** = ensures a certain number of pods are running
 
@@ -60,9 +60,12 @@ Let’s check out some terminology below:
 
 https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-deployments-understanding-replication-options/
 
-## Components & Services
 
-### Control Plane
+# 3. Core Concepts
+
+### 3.1 Kubernetes architecture
+
+#### 3.1.1 Control Plane
 
 **Services on Master Nodes:** entities responsible for managing cluster state.
 
@@ -82,7 +85,7 @@ https://www.mirantis.com/blog/kubernetes-replication-controller-replica-set-and-
 | kube-proxy        | perform connection forwarding                                                             |
 | Container Runtime | Kubernetes supported runtimes: Docker, rkt, runc and any OCI runtime-spec implementation. |
 
-### Extra components
+#### 3.1.2 Extra components
 
 **Addons:** - pods and services that implement cluster features
 
@@ -110,6 +113,5 @@ https://codefresh.io/kubernetes-guides/kubernetes-cheat-sheet/
 https://kubernetes.io/docs/concepts/overview/components/
 
 
-## Core Concepts
 
-
+### 3.2 Kubernetes basic objects
