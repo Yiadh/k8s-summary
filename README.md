@@ -62,6 +62,14 @@ Let’s check out some terminology below:
 | Content Cell  | Content Cell  |
 
 *** Services on Master Nodes: entities responsible for managing cluster state.
+
+| Name                     | Summary |
+| ------------------------ | ------------- |
+| kube-apiserver           | exposes the Kubernetes API from master nodes  |
+| etcd                     | reliable data store for all k8s cluster data  |
+| kube-scheduler           | schedule pods to run on selected nodes |
+| kube-controller-manager  | node controller, replication controller, endpoints controller, and service account & token controllers |
+
 | Name                                                                                                          | Summary                                            |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------  |
 | [[https://github.com/kubernetes/kubernetes/tree/master/cmd/kube-apiserver][kube-apiserver]]                   | exposes the Kubernetes API from master nodes       |
