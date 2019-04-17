@@ -56,6 +56,15 @@ Let’s check out some terminology below:
 
 ### Control Plane
 
+
+| Name                         | Summary                    |
+|------------------------------+----------------------------|
+| List api group               | =kubectl api-versions=     |
+| List all CRD                 | =kubectl get crd=          |
+| List storageclass            | =kubectl get storageclass= |
+| List all supported resources | =kubectl api-resources=    |
+
+
 *** Services on Master Nodes: entities responsible for managing cluster state.
 | Name                    | Summary                                                                                                |
 |-------------------------+--------------------------------------------------------------------------------------------------------|
