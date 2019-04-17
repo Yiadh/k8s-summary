@@ -56,6 +56,10 @@ Let’s check out some terminology below:
 
 ### Control Plane
 
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
 
 | Name                         | Summary                    |
 |------------------------------+----------------------------|
