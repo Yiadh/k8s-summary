@@ -100,6 +100,14 @@ https://kubernetes.io/docs/concepts/overview/components/
 
 **replicaSet** = declared in essentially the same way as Replication Controllers, except that they have more options for the selector.
 
+However there is one major difference between replication controller and replica set. Replica Set requires a selector definition.
+
+The selector section helps the Replica Set identify what PODs fall under it.
+
+But why would you have to specify what PODs fall under it if you have provided the contents of the POD definition file itself in the template. It's because ReplicaSet can also manage PODs that were not created as part of the replica set creation.
+
+So for example there were PODs created before the creation of the replica set that match labels specified in the selector. The Replica set will also take those PODs into consideration when creating the replicas.
+
 **deployment** = declaratively manages a replicaSet
 
 **statefulSet** = like a deployment, but for non-interchangeable (or stateful) underlying pods
