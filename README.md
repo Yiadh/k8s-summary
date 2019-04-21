@@ -200,13 +200,15 @@ By default docker runs a container with a limited set of capabilities. And so th
 
 If you wish to override this behavior and provide additional privileges then what is available, use the cap-add or cap-drop or privileged option in the docker run command.
 
-  docker run --cap-add MAC_ADMIN --name ubuntu-ctnr ubuntu
+    docker run --cap-add MAC_ADMIN --name ubuntu-ctnr ubuntu
 
 ### 3.4.3 Linux capabilities
 
 all linux capabilities are located under /usr/include/linux/capability.h
 
-  man capabilities
+An easier way to get further information regarding linux capabilities:
+
+    man capabilities
 
 ### 3.4.4 Kubernetes security context
 
@@ -216,10 +218,10 @@ The configuration at the container level overides the pod level.
 
 Capabilities are only supported at the container level not at the pod level.
 
-  security_context:
-    runAsUser: 1000
-    capabilities:
-      add: ["MAC_ADMIN"]
+    security_context:
+      runAsUser: 1000
+      capabilities:
+        add: ["MAC_ADMIN"]
 
 ## 3.5 Service Account
 
