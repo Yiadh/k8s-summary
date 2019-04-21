@@ -225,9 +225,49 @@ Capabilities are only supported at the container level not at the pod level.
 
 ## 3.5 Service Account
 
+The concept of service accounts is linked to other security related concepts and Kubernetes such as authentication, authorization, role-based access controls cetera.
+
+There are two types of accounts in Kubernetes - a user account and a service account.
+
+- User account: As you might already know the user account is used by humans and service accounts are used by machines.
+
+A user account could be for an administrator accessing the cluster to perform administrative tasks or a developer accessing the cluster to deploy applications etc..
+
+- Service account could be an account used by an application to interact with a Kubernetes cluster. It helps applications interracting with the k8s api server.
+
+For example a monitoring application like Prometheus is used as a service account to pull the Kubernetes API for performance metrics. An automated build tool like Jenkin's uses service accounts to deploy applications on the Kubernetes cluster.
+
+The Serviceaccount is defined at pod level
+
 ## 3.6 Resource Requirements
 
+By default Kubernetes sets a limit of 1 vCPU to containers. So if you do not specify explicitly a container will be limited to consume only one vCPU from the node.
+
+The same goes with memory. By default Kubernetes has set a limit of 512 Mebibyte on containers.
+
+Remember that the limits and requests are set for each container within the POD. So what happens when a POD tries to exceed resources beyond its specified limit?
+
+In case of CPU, kubernetes throttles the CPU so that it does not go beyond the specified limit. A container cannot use more CPU resources than its limit.
+
+However this is not the case with the memory a container can use more memory resources than its limit. So if a POD tries to consume more memory than its limit constantly the POD will be terminated.
+
+The status 'OOMKilled' indicates that the pod ran out of memory.
+
+If there is no enough resources for a pod to be scheduled, it remains at the status pending.
+
+Syntax:
+
+    resources:
+      limits:
+        cpu: 1
+        memory: 1Gi
+      request:
+        cpu: 0.5
+        memory: 512Mi
+
 ## 3.7 Taints and Tolerations
+
+Used to define the pod to node relationship and how you can restrict what pods are placed on what nodes.
 
 ## 3.8 Node Seectors
 
