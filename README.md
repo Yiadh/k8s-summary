@@ -150,3 +150,83 @@ Pods become isolated by having a NetworkPolicy that selects them. Once there is 
 **Security Context**
 
 Pods and containers within pods can be given specific security constraints to limit what processes running in containers can do. For expale UID of the process, the Linux capabilities, and the filesystem group can be limited.
+
+
+# 3. Configuration
+
+## 3.1 Commands and Arguments for Docker and Kubernetes
+
+## 3.2 Environment variables
+
+## 3.3 ConfigMaps and Secrets
+
+They could be mounted as environment variables, single envionment variable or volume.
+
+## 3.4 Security Context
+
+### 3.4.1 Docker containers anatomy
+
+Containers created by Docker, from Docker-formatted container images, are isolated from each other by several standard features of the Linux kernel. These include:
+
+**Namespaces**
+The kernel can place specific system resources that are normally visible to all processes into a namespace. Inside a namespace, only processes that are members of that namespace can see those resources. Resources that can be placed into a namespace include network interfaces, the process ID list, mount points, IPC resources, and the system's own hostname information. As an example, two processes in two different mounted namespaces have different views of what the mounted root file system is. Each container is added to a specific set of namespaces, which are only used by that container.
+
+**Control groups (cgroups)**
+Control groups partition sets of processes and their children into groups in order to manage and limit the resources they consume. Control groups place restrictions on the amount of system resources the processes belonging to a specific container might use. This keeps one container from using too many resources on the container host.
+
+**SELinux**
+SELinux is a mandatory access control system that is used to protect containers from each other and to protect the container host from its own running containers. Standard SELinux type enforcement is used to protect the host system from running containers. Container processes run as a confined SELinux type that has limited access to host system resources. In addition, sVirt uses SELinux Multi-Category Security (MCS) to protect containers from each other. Each container's processes are placed in a unique category to isolate them from each other.
+
+
+### 3.4.2 Docker security
+
+When you list the processes on the host, you see a list of processes including the process running inside the container [having the id 1] but with a different process ID. This is because the processes can have different process IDs in different namespaces and that's how
+
+Docker isolates containers within the system. So that's process isolation.
+
+By default Docker runs processes within containers as the root user. Both within the container and outside the container on the host the process is run as the root user.
+
+To inforce docker security, you can:
+
+- Now if you do not want the process within the container to run as the root, user you may set the user using the user option within the docker run command and specify the new user ID.
+
+- Another way to enforce user security is to have this defined in the docker image itself at the time of creation. For example, we will use the default ubuntu image and set the user id to 1000 using the user instruction.
+
+- limit the abilities of the root user within the container. 
+
+Docker implements a set of security features that limits the abilities of the root user within the container. So the root user within the container isn't really like the root user on the host. Docker uses Linux capabilities to implement this.
+
+By default docker runs a container with a limited set of capabilities. And so the processes running within the container do not have the privileges to say reboot the host or perform operations that can disrupt the host or other containers running on the same host.
+
+If you wish to override this behavior and provide additional privileges then what is available, use the cap-add or cap-drop or privileged option in the docker run command.
+
+  docker run --cap-add MAC_ADMIN --name ubuntu-ctnr ubuntu
+
+### 3.4.3 Linux capabilities
+
+all linux capabilities are located under /usr/include/linux/capability.h
+
+  man capabilities
+
+### 3.4.4 Kubernetes security context
+
+Security context could be defined at pod level or container level.
+
+The configuration at the container level overides the pod level.
+
+Capabilities are only supported at the container level not at the pod level.
+
+  security_context:
+    runAsUser: 1000
+    capabilities:
+      add: ["MAC_ADMIN"]
+
+## 3.5 Service Account
+
+## 3.6 Resource Requirements
+
+## 3.7 Taints and Tolerations
+
+## 3.8 Node Seectors
+
+## 3.9 Node Affinity
