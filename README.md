@@ -269,6 +269,74 @@ Syntax:
 
 Used to define the pod to node relationship and how you can restrict what pods are placed on what nodes.
 
+A pod could be scheduled on a specific node if and only if it is tolerant to all the target node taints.
+
+Node Taint syntax:
+
+    kubectl taint nodes nodeName key=value:taintEffect
+
+To remove the taint added by the command above, you can run:
+
+    kubectl taint nodes nodeName key=value:taintEffect-
+
+
+The taint effect defines what would happen to the pods if they do not tolerate the taint. There are three main effects:
+
+- **NoSchedule** which means the parts will not be Scheduled on the node which is what we have been discussing,
+
+- **PreferNoSchedule** which means the system will try to avoid placing it pod on the node but that is not guaranteed.
+
+- **NoExecute** which means that the new pod will be evicted from the node (if it is already running on the node), and will not be scheduled onto the node (if it is not yet running on the node).
+
+
+The NoExecute taint effect affects pods that are already running on the node as follows:
+
+- pods that do not tolerate the taint are evicted immediately
+
+- pods that tolerate the taint without specifying tolerationSeconds in their toleration specification remain bound forever
+
+- pods that tolerate the taint with a specified tolerationSeconds remain bound for the specified amount of time
+
+
+Pod toleration syntax:
+
+    tolerations:
+    - key: "key"
+      operator: "Equal"
+      value: "value"
+      effect: "NoSchedule"
+      tolerationSeconds: 3600
+
+And remember all of these values need to be encoded in double quotes. 
+
+tolerationSeconds field dictates how long the pod will stay bound to the node after the taint is added.
+
+A toleration “matches” a taint if the keys are the same and the effects are the same, and:
+
+- the operator is Exists (in which case no value should be specified), or
+
+- the operator is Equal and the values are equal
+
+**Notes:**
+
+Operator defaults to Equal if not specified.
+
+An empty key with operator Exists matches all keys, values and effects which means this will tolerate everything.
+
+     tolerations:
+    - operator: "Exists"
+
+An empty effect matches all effects with key key.
+
+    tolerations:
+    - key: "key"
+      operator: "Exists"
+
+
+So remember taints and tolerations does not tell the pot to go to a particular node. Instead it tells the node to only accept pods with certain tolerations.
+
+If your requirement is to restrict a pod to certain nodes it is achieved through another concept called as node affinity, which we will discuss in the next lecture.
+
 ## 3.8 Node Seectors
 
 ## 3.9 Node Affinity
