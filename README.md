@@ -261,7 +261,7 @@ Syntax:
       limits:
         cpu: 1
         memory: 1Gi
-      request:
+      requests:
         cpu: 0.5
         memory: 512Mi
 
