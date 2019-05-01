@@ -156,6 +156,16 @@ Pods and containers within pods can be given specific security constraints to li
 
 ## 3.1 Commands and Arguments for Docker and Kubernetes
 
+command (resp. args) in k8s is the equivalent for ENTRYPOINT (resp. CMD) in Docker
+
+
+    docker run --entrypoint sleep ubuntu 10
+
+    command: ["sleep"]
+    args:
+    - "10"
+
+
 ## 3.2 Environment variables
 
 ## 3.3 ConfigMaps and Secrets
@@ -389,3 +399,178 @@ The rules are defined using custom labels on nodes and label selectors specified
 Pod affinity/anti-affinity allows a pod to specify an affinity (or anti-affinity) towards a group of pods it can be placed with.
 
 The node does not have control over the placement.
+
+
+# 4. Multi-Container PODs
+
+Containers within Multi container pods share the same lifecycle which means they are created together and destroyed together. They share the same network space which means they can refer to each other as local host and they have access to the same storage volumes.
+
+This way you do not have to establish volume sharing or services between the PODs to enable communication between them to create a multi container pod.
+
+There are different Design Patterns of Multi-container PODs in Kubernetes such as the Ambassador, Adapter and Sidecar.
+
+### 4.1 Ambassador container
+
+A good example of a Sidecar pattern is deploying a logging agent alongside a web server to collect logs and forward them to a central log server.
+
+### 4.2 Adapter container
+
+Building on that example say we have multiple applications generating logs in different formats.
+
+It will be hard to process the various formats on the central logging server.
+
+So before sending the logs to the central server we would like to convert the logs to a common format.
+
+For this, we deploy an Adapter container. The Adapter container processes the logs before sending it to the central server.
+
+### 4.3 Ambassador container
+
+So your application communicates to different database instances at different stages of development. A local database for development, one for testing and another for production.
+
+You must make sure to modify this connectivity in your application code depending on the environment you are deploying your application to.
+
+You may choose to outsource such logic to a separate container within your pod so that your application can always refer to a database at local host and the new container will proxy that request to the right database.
+
+This is known as an Ambassador container.
+
+# 5. Observability
+
+Pod conditions:
+
+* PodScheduled: T/F
+
+* Initialized: T/F
+
+* ContainersReady: T/F
+
+* Ready: T/F
+
+The ready conditions indicate that the application inside the pod is running and is ready to accept user traffic.
+
+Check **Conditions** section in kubectl pod describe.
+
+The service relies on the pods ready condition to route traffic. 
+
+## 5.1 Readiness and Liveness probes
+
+The kubelet uses **liveness probes** to know when to restart a Container. For example, liveness probes could catch a deadlock, where an application is running, but unable to make progress. Restarting a Container in such a state can help to make the application more available despite bugs.
+
+The kubelet uses **readiness probes** to know when a Container is ready to start accepting traffic. A Pod is considered ready when all of its Containers are ready. One use of this signal is to control which Pods are used as backends for Services. When a Pod is not ready, it is removed from Service load balancers.
+
+There are different ways a probe can be configured:
+
+* For a http use httpGet option with the path and the port.
+
+In case of a web application, It could be when the API server is up and running.
+
+    httpGet:
+        path: /healthz
+        port: 8080
+        httpHeaders:
+        - name: Custom-Header
+          value: Awesome
+
+* For TCP use the tcpSocket option with the port.
+
+In case of database, you may test to see if a particular TCP socket is listening.
+
+    tcpSocket:
+        port: 3306
+
+* For executing a command specify the exec option with the command and options in an array format.
+
+    exec:
+        command:
+        - cat
+        - /tmp/healthy
+
+The service relies on the pods ready condition to route traffic. Without the readiness probe configured correctly, the service would immediately start routing traffic to the new POD. That will result in service disruption to at least some of the users.
+
+Instead, if the PODs were configured with the correct readiness probe, the service will continue to serve traffic only to the older PODs and wait until the new POD is ready.
+
+Once ready the traffic will be routed to the new POD as well, ensuring no users are affected.
+
+## 5.2 Container logging
+
+The docker logs command shows information logged by a running container. The docker service logs command shows information logged by all containers participating in a service.
+
+By default, docker logs or docker service logs shows the command’s output just as it would appear if you ran the command interactively in a terminal. UNIX and Linux commands typically open three I/O streams when they run, called STDIN, STDOUT, and STDERR.
+
+In some cases, docker logs may not show useful information unless you take additional steps.
+
+* If you use a logging driver which sends logs to a file, an external host, a database, or another logging back-end, docker logs may not show useful information.
+
+* If your image runs a non-interactive process such as a web server or a database, that application may send its output to log files instead of STDOUT and STDERR.
+
+You can overcome the mentionned above issues by overwriting the log files and causing logs to be sent to the relevant special device instead in the Dockerfile as follow:
+
+    # forward request and error logs to docker log collector
+    RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
+
+You can check container logs as follow:
+
+    docker logs <containerId>
+
+    kubectl logs -c <containerName> -f <podName>
+
+## 5.3 Monitor and Debug applications
+
+Kubernetes does not come with a full feature built in monitoring solution.
+
+However there are a number of open source solutions available today such as Metric Server, Prometheus, Elastic Stack and proprietary solutions like Datadog and Dynatrace.
+
+The kubernetes is for developers of course as well as the certification requires only a minimal knowledge of monitoring Kubernetes.
+
+So in the scope of this course we will discuss about the metrics server only. The other solutions will be discussed in the Kubernetes for Administrators course.
+
+Heapster was one of the original projects that enabled monitoring and analysis features for Kubernetes. You will see a lot of reference online when you look for reference architectures on monitoring Kubernetes. However, Heapster is now deprecated and a slimmed down version was formed known as the Metric Server.
+
+You can have one metric server per Kubernetes cluster. The Metrics Server retrieves metrics from each of the Kubernetes nodes and pods, aggregates them and store them in memory.
+
+Note that the metric server is only an in-memory monitoring solution and does not store the metrics on the disk. And as a result you cannot see historical performance data. 
+
+
+So how were the metrics generated for the PODs on these nodes?
+
+Kubernetes runs an agent on each node known as the **kubelet** which is responsible for receiving instructions from the kubernetes API Master server and running PODs on the nodes.
+
+The Kubelet also contains a subcomponent known as the **cAdvisor** or Container aAdvisor.
+
+cAdvisor is responsible for retrieving performance metrics from pods and exposing them through the kubelet API to meet the metrics available for the metrics server.
+
+
+View all events:
+
+    kubectl get events --all-namespaces
+
+List Events sorted by timestamp:
+
+    kubectl get events –sort-by=.metadata.creationTimestamp
+
+
+Get node resource usage
+
+    kubectl top node
+
+Get pod resource usage
+
+    kubectl top pod
+
+Get resource usage for a given pod
+
+    kubectl top <podname> --containers
+
+List resource utilization for all containers
+
+    kubectl top pod --all-namespaces --containers=true
+
+# 6. Pod Design
+
+## 6.1. Labels, Selectors and Annotations
+
+## 6.2. Rolling Updates & Rollbacks in Deployments
+
+## 6.3. Jobs
+
+## 6.4. CronJobs
