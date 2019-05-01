@@ -337,6 +337,55 @@ So remember taints and tolerations does not tell the pot to go to a particular n
 
 If your requirement is to restrict a pod to certain nodes it is achieved through another concept called as node affinity, which we will discuss in the next lecture.
 
-## 3.8 Node Seectors
+## 3.8 Node Selectors
+
+You can constrain a pod to only be able to run on particular nodes or to prefer to run on particular nodes. There are several ways to do this, and the recommended approaches all use label selectors to make the selection.
+
+nodeSelector is a field of PodSpec. It specifies a map of key-value pairs. For the pod to be eligible to run on a node, the node must have each of the indicated key-value pairs as labels (it can have additional labels as well).
+
+Add label to a specific node
+
+    kubectl label nodes <node-name> <label-key>:<label-value>
+    kubectl label nodes node01 size:large
+
+Delete label from node
+
+    kubectl label node <node-name> <label-key>-
+
+Add a constrain to a pod to only be able to run on particular nodes having the mentionned above keyvalue label
+
+    nodeSelector:
+      <label-key>: <label-value>
+
+We used a single label and selector to achieve our goal here.
+
+But what if our requirement is much more complex?
+
+For example we would like to say something like :"place the pod on a large or medium node", or something like: "place the pod on any nodes that are not small".
+
+You cannot achieve this using node selectors. For this node infinity and anti-affinity features were introduced.
 
 ## 3.9 Node Affinity
+
+Using node selectors you cannot provide advanced expressions like OR or NOT with node selectors. Node Affinity feature provides us with advanced capabilities to limit pod placement on specific nodes.
+
+There are currently two types of node affinity available:
+
+- requiredDuringSchedulingIgnoredDuringExecution
+
+- preferredDuringSchedulingIgnoredDuringExecution.
+
+Check syntax for adding a constrain to a pod to only be able to run on particular nodes
+
+    kubectl explain pod --recursive
+
+
+## 3.10 Pod Affinity and Anti-Affinity
+
+Pod affinity and pod anti-affinity allow you to specify rules about how pods should be placed relative to other pods.
+
+The rules are defined using custom labels on nodes and label selectors specified in pods.
+
+Pod affinity/anti-affinity allows a pod to specify an affinity (or anti-affinity) towards a group of pods it can be placed with.
+
+The node does not have control over the placement.
